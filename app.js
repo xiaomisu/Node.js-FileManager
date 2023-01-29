@@ -3,7 +3,7 @@ const app = express();
 const fs = require('fs');
 const multer = require('multer');
 
-const port = 8000;
+const port = 3001;
 const responsedelay = 50;   // miliseconds
 
 // static folders
@@ -58,7 +58,7 @@ app.post('/files-list', function(req, res)
                 {
                     let filesize = ConvertSize(stats.size);
                     contents += '<tr><td><a href="/' + folder + '/' + encodeURI(value) + '">' + value + '</a></td><td>' + filesize + '</td><td>/' + folder + '/' + value + '</td></tr>' + '\n';
-                    
+
                     if(index == (array.length - 1)) { setTimeout(function() {res.send(contents);}, responsedelay); }
                 });
             });
@@ -84,7 +84,7 @@ app.post('/image-list', function(req, res)
 
     var directories = ['/font', '/html', '/image', '/pdf', '/video'];
     var dirindex = 0;
-    
+
     /**
      * this is an inline function for iterating the directories array instead of loops. it cause avoiding conflitcness of loops and async jobs.
      * @param dindex index of directories
@@ -119,7 +119,7 @@ app.post('/image-list', function(req, res)
                                 contents += '<div class="details"><div class="image"><img src="' + directory + '/' + encodeURI(value) + '" alt="' + value + '"></div><p><a href="' + directory + '/' + encodeURI(value) + '">' + value + '</a></p><p>' + filesize + '</p><p>' + directory + '/' + value + '</p></div>' + '\n';
                             });
                         }
-                        
+
                         if(index == array.length - 1 && dirindex == directories.length - 1)
                         {
                             setTimeout(function() { res.send(contents); }, responsedelay);
@@ -142,7 +142,7 @@ app.post('/image-list', function(req, res)
             }
         });
     };
-    
+
     readNextDirectory(dirindex);
 });
 
